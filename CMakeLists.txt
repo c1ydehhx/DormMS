@@ -19,5 +19,5 @@ FetchContent_MakeAvailable(tabulate)
 include_directories(${CMAKE_SOURCE_DIR}/include)
 include_directories(${tabulate_SOURCE_DIR}/include)
 
-add_executable(DormMS src/main.cpp src/system/student_manage/student_manage.cpp)
+add_executable(DormMS src/main.cpp)
 set_target_properties(DormMS PROPERTIES OUTPUT_NAME "${CMAKE_SOURCE_DIR}/build/DormMS")

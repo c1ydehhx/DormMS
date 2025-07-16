@@ -10,16 +10,13 @@
 class StudentManageSystem{
 private:
     std::vector<Student> students;
-    static StudentManageSystem* instance_ptr;
     StudentManageSystem(){
         
     }
 public:
     static StudentManageSystem& get_instance(){
-        if(instance_ptr == nullptr){
-            instance_ptr = new StudentManageSystem();
-        }
-        return *instance_ptr;
+        static StudentManageSystem instance;
+        return instance;
     }
 
     void add_student(Student student){
