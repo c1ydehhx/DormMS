@@ -1,18 +1,23 @@
+#include <iostream>
+#include <unistd.h>
+
 #include "auth/login.hpp"
 
-void LoginPortal::Login(){
+void LoginPortal::authenticate(std::string username, std::string password){
+    
+}
+
+void LoginPortal::login(){
     std::cout << "DormMS v0.1" << std::endl;
 
     while(true){
         std::string account;
-        std::string password;
 
         std::cout << "Username: ";
         std::cin >> account;
 
-        // TODO: Secure password input. But since it's platform specific, skip it.
         std::cout << "Password: ";
-        std::cin >> password;
+        char *password = getpass("Password: ");
 
         if(account == "admin" && std::string(password) == "admin"){
             std::cout << "Login Success." << std::endl;

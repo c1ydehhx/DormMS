@@ -1,14 +1,14 @@
 #ifndef LOGIN_MENU_HPP
 #define LOGIN_MENU_HPP
 
-#include <iostream>
 #include <string>
 #include <unistd.h>
 
 class LoginPortal {
 private:
+    static void authenticate(std::string name, std::string password);
 public:
-    static void Login();
+    static void login();
 };
 
 #endif

@@ -2,6 +2,7 @@
 #define STUDENT_MANAGE_MENU_HPP
 
 #include <iostream>
+#include <unistd.h>
 
 #include "system/student_manage/student.hpp"
 #include "system/student_manage/student_id.hpp"
@@ -20,20 +21,25 @@ private:
         std::string student_id_str;
         std::string student_name;
 
-        std::cout << "<1/3> Please enter student ID: ";
+        std::cout << "<1/4> Please enter student ID: ";
         std::cin >> student_id_str;
 
-        std::cout << "<2/3> Please enter student name: ";
+        std::cout << "<2/4> Please enter student name: ";
         std::cin >> student_name;
 
         std::string gender;
 
         while(gender != "M" && gender != "F"){
-            std::cout << "<3/3> Please enter student gender (M/F): ";
+            std::cout << "<3/4> Please enter student gender (M/F): ";
             std::cin >> gender;
         }
 
+        char *password = getpass("<4/4> Please enter password for this student: ");
+
         Student student(StudentID(student_id_str), student_name, gender == "F");
+
+        student.set_password(password);
+
         StudentManageSystem::get_instance().add_student(student);
 
         std::cout << "Enter student successfully." << std::endl << std::endl;

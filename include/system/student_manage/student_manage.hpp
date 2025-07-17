@@ -41,10 +41,10 @@ public:
         tabulate::Table table;
         table.format().multi_byte_characters(true);
 
-        table.add_row({"ID", "Name", "Gender", "Room", "Bed"});
+        table.add_row({"ID", "Name", "Gender", "Room", "Bed", "Password"});
 
         for(Student student : students){
-            table.add_row({student.get_student_id().to_string(), student.get_name(), student.get_gender() == true ? "Female" : "Male", "21013", "2"});
+            table.add_row({student.get_student_id().to_string(), student.get_name(), student.get_gender() == true ? "Female" : "Male", "21013", "2", student.get_password()});
         }
 
         table.print(std::cout);
