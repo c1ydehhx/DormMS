@@ -10,7 +10,6 @@ class Student : public User {
   private:
     StudentID student_id;
     std::string name;
-    std::string password;
     bool gender; // False -> Male, True -> Female
   public:
     Student(StudentID student_id, std::string name, bool gender,
