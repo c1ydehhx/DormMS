@@ -4,6 +4,7 @@
 #include <iostream>
 #include <unistd.h>
 
+#include "config/config.hpp"
 #include "system/student_manage/student.hpp"
 #include "system/student_manage/student_id.hpp"
 #include "system/student_manage/student_manage.hpp"
@@ -58,13 +59,26 @@ private:
         std::cin >> sure;
 
         if(sure == "y" || sure == "Y"){
-            StudentManageSystem::get_instance().delete_student(student_id_str);
             std::cout << "Delete student successfully." << std::endl << std::endl;
         }else{
             std::cout << "Exit procedure." << std::endl << std::endl;
         }
 
         return;
+    }
+    
+    static void enter_commit_procedure(){
+        std::string sure;
+
+        std::cout << "<1/1> Are you sure? (y/n) ";
+        std::cin >> sure;
+
+        if(sure == "y" || sure == "Y"){
+            StudentManageSystem::get_instance().commit();
+            std::cout << "Commit." << std::endl << std::endl;
+        }else{
+            std::cout << "Exit procedure." << std::endl << std::endl;
+        }
     }
 public:
     static void enter_student_manage_system(){
@@ -96,6 +110,8 @@ public:
                 case 3:
                     enter_list_student_procedure();
                     break;
+                case 4:
+                    enter_commit_procedure();
                 default:
                     std::cout << "Please, select function in the list" << std::endl;
                     break;

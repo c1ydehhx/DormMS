@@ -5,6 +5,8 @@
 #include <vector>
 #include <tabulate/table.hpp>
 
+#include "config/config.hpp"
+#include "util/serialize.hpp"
 #include "student.hpp"
 
 class StudentManageSystem{
@@ -49,6 +51,16 @@ public:
 
         table.print(std::cout);
         std::cout << std::endl;
+    }
+
+    void commit(){
+        std::string path = Configuration::get_instance().get_student_data_path();
+        serialize(students, path);
+    }
+
+    void read_students(){
+        std::string path = Configuration::get_instance().get_student_data_path();
+        students = deserialize(path);
     }
 };
 

@@ -13,7 +13,7 @@ private:
     std::string password;
     bool gender; // False -> Male, True -> Female
 public:
-    Student(StudentID student_id, std::string name, bool gender) : student_id(student_id), name(name), gender(gender) {
+    Student(StudentID student_id, std::string name, bool gender, std::string password = "") : student_id(student_id), name(name), gender(gender), password(password) {
         
     }
 

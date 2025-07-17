@@ -18,6 +18,15 @@ public:
         static Configuration configuration;
         return configuration;
     }
+    
+    std::string get_student_data_path(){
+        return student_data_path;
+    }
+    
+    std::string get_dorm_data_path(){
+        return dorm_data_path;
+    }
+
     void load_configuration(std::string path){
         std::ifstream f(path);
         nlohmann::json data = nlohmann::json::parse(f);
@@ -29,7 +38,6 @@ public:
         dorm_data_path = data["dorm_data"];
 
         std::cout << "Load dorm data by path: " << dorm_data_path << std::endl;
-
     }
 };
 
