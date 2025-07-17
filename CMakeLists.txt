@@ -37,6 +37,8 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(json)
 
+file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/data)
+
 include_directories(${CMAKE_SOURCE_DIR}/include)
 include_directories(${tabulate_SOURCE_DIR}/include)
 include_directories(${digestpp_SOURCE_DIR}/algorithm)
