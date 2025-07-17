@@ -8,6 +8,7 @@
 
 class Configuration {
   private:
+    std::string admin_data_path;
     std::string student_data_path;
     std::string dorm_data_path;
     Configuration() {}
@@ -18,6 +19,8 @@ class Configuration {
         return configuration;
     }
 
+    std::string get_admin_data_path() { return admin_data_path; }
+
     std::string get_student_data_path() { return student_data_path; }
 
     std::string get_dorm_data_path() { return dorm_data_path; }
@@ -25,6 +28,11 @@ class Configuration {
     void load_configuration(std::string path) {
         std::ifstream f(path);
         nlohmann::json data = nlohmann::json::parse(f);
+
+        admin_data_path = data["admin_data"];
+
+        std::cout << "Load admin data by path: " << admin_data_path
+                  << std::endl;
 
         student_data_path = data["student_data"];
 

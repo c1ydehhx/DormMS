@@ -1,4 +1,5 @@
 {
+    "admin_data": "./data/admin.dormms",
     "student_data": "./data/student.dormms",
     "dorm_data": "./data/dorm.dormms"
 }

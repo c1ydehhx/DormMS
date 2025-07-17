@@ -15,13 +15,18 @@ class User {
     RoleType role;
 
   public:
-    User(std::string account, std::string password, RoleType role) : account(account), password(password), role(role) {}
+    User(std::string account, std::string password, RoleType role)
+        : account(account), password(password), role(role) {}
 
     std::string get_password() { return password; }
 
-    void set_password(std::string password) { this->password = sha256(password); }
+    void set_password(std::string password) {
+        this->password = sha256(password);
+    }
 
-    bool authenticate(std::string password) { return this->password == sha256(password); }
+    bool authenticate(std::string password) {
+        return this->password == sha256(password);
+    }
 };
 
 #endif

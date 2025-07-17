@@ -1,3 +1,6 @@
+#ifndef SERIALIZE_HPP
+#define SERIALIZE_HPP
+
 #include <fstream>
 #include <vector>
 
@@ -23,6 +26,12 @@ struct StudentData {
     };
 };
 
+struct AdminData {
+    std::string password;
+
+    template <typename S> void serialize(S &s) { s.text1b(password, 100); };
+};
+
 inline void serialize(std::vector<Student> &students, std::string path) {
     std::vector<uint8_t> buffer;
 
@@ -37,6 +46,17 @@ inline void serialize(std::vector<Student> &students, std::string path) {
     bitsery::Serializer<bitsery::OutputBufferAdapter<std::vector<uint8_t>>> ser(
         buffer);
     ser.container(student_data, 1000);
+
+    std::ofstream ofs(path, std::ios::binary);
+    ofs.write(reinterpret_cast<const char *>(buffer.data()), buffer.size());
+}
+
+inline void serialize(AdminData admin_data, std::string path) {
+    std::vector<uint8_t> buffer;
+
+    bitsery::Serializer<bitsery::OutputBufferAdapter<std::vector<uint8_t>>> ser(
+        buffer);
+    ser.object(admin_data);
 
     std::ofstream ofs(path, std::ios::binary);
     ofs.write(reinterpret_cast<const char *>(buffer.data()), buffer.size());
@@ -60,3 +80,19 @@ inline std::vector<Student> deserialize(std::string path) {
 
     return students;
 }
+
+inline AdminData deserialize_admin_data(std::string path) {
+    std::ifstream ifs(path, std::ios::binary);
+    std::vector<uint8_t> buffer((std::istreambuf_iterator<char>(ifs)), {});
+
+    AdminData admin_data;
+
+    bitsery::Deserializer<bitsery::InputBufferAdapter<std::vector<uint8_t>>>
+        des(buffer.begin(), buffer.end());
+
+    des.object(admin_data);
+
+    return admin_data;
+}
+
+#endif

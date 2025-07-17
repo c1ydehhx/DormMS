@@ -5,6 +5,7 @@
 #include "auth/login.hpp"
 #include "system/student_manage/student.hpp"
 #include "system/student_manage/student_manage.hpp"
+#include "user/admin.hpp"
 
 void LoginPortal::authenticate(std::string username, std::string password) {}
 
@@ -22,7 +23,8 @@ void LoginPortal::login() {
         optional<Student> optional_student =
             StudentManageSystem::get_instance().get_student(account);
 
-        if (account == "admin" && std::string(password) == "admin") {
+        if (account == "admin" &&
+            Admin::get_instance().authenticate(password)) {
             std::cout << "Login Success." << std::endl;
             std::cout << std::endl;
             break;
