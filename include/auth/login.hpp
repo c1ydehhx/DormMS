@@ -5,9 +5,10 @@
 #include <unistd.h>
 
 class LoginPortal {
-private:
+  private:
     static void authenticate(std::string name, std::string password);
-public:
+
+  public:
     static void login();
 };
 
