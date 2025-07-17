@@ -2,6 +2,7 @@
 #define STUDENT_MANAGE_SYSTEM_HPP
 
 #include <iostream>
+#include <optional>
 #include <vector>
 #include <tabulate/table.hpp>
 
@@ -19,6 +20,15 @@ public:
     static StudentManageSystem& get_instance(){
         static StudentManageSystem instance;
         return instance;
+    }
+
+    std::optional<Student> get_student(std::string ID){
+        for(int i = 0; i < students.size(); i++){
+            if(students[i].get_student_id().to_string() == ID){
+                return std::optional<Student>(students[i]);
+            }
+        }
+        return std::optional<Student>();
     }
 
     void add_student(Student student){

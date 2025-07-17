@@ -36,6 +36,10 @@ public:
     void set_password(std::string password){
         this->password = sha256(password);
     }
+
+    bool authenticate(std::string password){
+        return this->password == sha256(password);
+    }
 };
 
 #endif
