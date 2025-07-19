@@ -33,23 +33,26 @@ class Admin : public User {
 
         if (!f.good()) {
             std::cout << "Hi, Welcome to DormMS." << std::endl;
-            std::cout << "Seems we don't have admin now, maybe we create a "
-                         "admin first."
+            std::cout << "No admin account found. Please create an admin first."
                       << std::endl;
 
             while (true) {
                 std::string pass1 =
                     std::string(getpass("Please enter password for admin: "));
                 std::string pass2 = std::string(
-                    getpass("Please enter password for admin again: "));
+                    getpass("Please re-enter password for confirmation: "));
 
                 if (pass1 == pass2) {
                     serialize(AdminData{sha256(pass1)}, admin_path);
-                    std::cout << "Nice. Please re-open this system. Bye."
+                    std::cout << "Admin account created successfully. Please "
+                                 "restart the system to continue. Goodbye."
+                              << std::endl
                               << std::endl;
                     exit(0);
                 } else {
-                    std::cout << "Password mismatch, try again." << std::endl;
+                    std::cout << "Password mismatch. Please try again."
+                              << std::endl
+                              << std::endl;
                 }
             }
         }

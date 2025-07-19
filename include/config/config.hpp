@@ -42,6 +42,8 @@ class Configuration {
         dorm_data_path = data["dorm_data"];
 
         std::cout << "Load dorm data by path: " << dorm_data_path << std::endl;
+
+        std::cout << std::endl;
     }
 };
 

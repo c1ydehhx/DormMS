@@ -5,7 +5,7 @@
 
 #include "menu/student_manage_menu.hpp"
 
-class MainMenu {
+class AdminMenu {
   public:
     static void enter_main_menu() {
         int choice = 0;
