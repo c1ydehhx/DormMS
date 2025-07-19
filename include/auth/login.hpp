@@ -9,7 +9,6 @@
 class LoginPortal {
   private:
     static std::shared_ptr<User> get_user_by_account(std::string account);
-    static void authenticate(std::string name, std::string password);
 
   public:
     static void login();
