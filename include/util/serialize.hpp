@@ -9,8 +9,8 @@
 #include <bitsery/traits/string.h>
 #include <bitsery/traits/vector.h>
 
-#include "system/student_manage/student.hpp"
-#include "system/student_manage/student_id.hpp"
+#include "user/student.hpp"
+#include "user/student_id.hpp"
 
 struct StudentData {
     std::string student_id;
