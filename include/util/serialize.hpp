@@ -38,9 +38,10 @@ inline void serialize(std::vector<Student> &students, std::string path) {
     std::vector<StudentData> student_data;
 
     for (Student student : students) {
-        student_data.push_back({student.get_student_id().to_string(),
-                                student.get_name(), student.get_password(),
-                                student.get_gender()});
+        student_data.push_back(
+            {student.get_student_id().to_string(), student.get_name(),
+             student.get_password(),
+             student.get_gender() == GenderType::FEMALE ? true : false});
     }
 
     bitsery::Serializer<bitsery::OutputBufferAdapter<std::vector<uint8_t>>> ser(
@@ -74,8 +75,10 @@ inline std::vector<Student> deserialize(std::string path) {
     std::vector<Student> students;
 
     for (StudentData data : student_data) {
-        students.push_back(Student(StudentID(data.student_id), data.name,
-                                   data.gender, data.password));
+        students.push_back(
+            Student(StudentID(data.student_id), data.name,
+                    data.gender == 0 ? GenderType::MALE : GenderType::FEMALE,
+                    data.password));
     }
 
     return students;

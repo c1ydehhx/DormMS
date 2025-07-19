@@ -3,10 +3,10 @@
 #include <unistd.h>
 
 #include "auth/login.hpp"
-#include "system/student_manage/student.hpp"
 #include "system/student_manage/student_manage.hpp"
 #include "user/admin.hpp"
 #include "user/current_user.hpp"
+#include "user/student.hpp"
 #include "user/user.hpp"
 
 std::shared_ptr<User> LoginPortal::get_user_by_account(std::string account) {

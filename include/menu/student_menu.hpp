@@ -1,10 +1,17 @@
 #ifndef STUDENT_MENU_HPP
 #define STUDENT_MENU_HPP
 
+#include "system/student_info/student_info.hpp"
 #include "user/current_user.hpp"
 #include "user/user.hpp"
 #include <iostream>
 class StudentMenu {
+  private:
+    static void enter_show_information_procedure() {
+        StudentInfoSystem::get_instance().show();
+        std::cout << std::endl;
+    }
+
   public:
     static void enter_student_menu() {
         int choice = 0;
@@ -26,9 +33,14 @@ class StudentMenu {
 
             std::cin >> choice;
 
+            std::cout << std::endl;
+
             switch (choice) {
             case 0:
                 return;
+            case 1:
+                enter_show_information_procedure();
+                break;
             default:
                 std::cout << "Please, select function in the list" << std::endl;
             }

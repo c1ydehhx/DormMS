@@ -6,13 +6,15 @@
 #include "student_id.hpp"
 #include "user/user.hpp"
 
+enum class GenderType { MALE, FEMALE };
+
 class Student : public User {
   private:
     StudentID student_id;
     std::string name;
-    bool gender; // False -> Male, True -> Female
+    GenderType gender; // False -> Male, True -> Female
   public:
-    Student(StudentID student_id, std::string name, bool gender,
+    Student(StudentID student_id, std::string name, GenderType gender,
             std::string password = "")
         : User(student_id.to_string(), password, RoleType::STUDENT),
           student_id(student_id), name(name), gender(gender) {}
@@ -21,7 +23,7 @@ class Student : public User {
 
     std::string get_name() { return name; }
 
-    bool get_gender() { return gender; }
+    GenderType get_gender() { return gender; }
 };
 
 #endif

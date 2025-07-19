@@ -5,9 +5,9 @@
 #include <unistd.h>
 
 #include "config/config.hpp"
-#include "system/student_manage/student.hpp"
-#include "system/student_manage/student_id.hpp"
 #include "system/student_manage/student_manage.hpp"
+#include "user/student.hpp"
+#include "user/student_id.hpp"
 
 class StudentManageMenu {
   private:
@@ -38,7 +38,8 @@ class StudentManageMenu {
         char *password =
             getpass("<4/4> Please enter password for this student: ");
 
-        Student student(StudentID(student_id_str), student_name, gender == "F");
+        Student student(StudentID(student_id_str), student_name,
+                        gender == "F" ? GenderType::FEMALE : GenderType::MALE);
 
         student.set_password(password);
 
