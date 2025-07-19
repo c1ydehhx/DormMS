@@ -6,6 +6,7 @@
 #include "system/student_manage/student.hpp"
 #include "system/student_manage/student_manage.hpp"
 #include "user/admin.hpp"
+#include "user/current_user.hpp"
 #include "user/user.hpp"
 
 std::shared_ptr<User> LoginPortal::get_user_by_account(std::string account) {
@@ -37,6 +38,7 @@ void LoginPortal::login() {
         std::shared_ptr<User> user = get_user_by_account(account);
 
         if (user != NULL && user->authenticate(password)) {
+            CurrentLoginUser::get_instance().set_current_user(user);
             std::cout << "Login Success." << std::endl;
             std::cout << std::endl;
             break;

@@ -18,7 +18,11 @@ class User {
     User(std::string account, std::string password, RoleType role)
         : account(account), password(password), role(role) {}
 
+    std::string get_account() { return account; }
+
     std::string get_password() { return password; }
+
+    RoleType get_role() { return role; }
 
     void set_password(std::string password) {
         this->password = sha256(password);
