@@ -8,8 +8,6 @@
 #include "user/admin.hpp"
 #include "user/user.hpp"
 
-void LoginPortal::authenticate(std::string username, std::string password) {}
-
 std::shared_ptr<User> LoginPortal::get_user_by_account(std::string account) {
     if (account == "admin") {
         return std::make_shared<User>(Admin::get_instance());
