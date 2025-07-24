@@ -19,11 +19,11 @@ class StudentInfoSystem {
         std::shared_ptr<User> user =
             CurrentLoginUser::get_instance().get_user();
 
-        std::optional<Student> student =
+        std::shared_ptr<Student> student =
             StudentManageSystem::get_instance().get_student(
                 user->get_account());
 
-        if (student.has_value()) {
+        if (student != nullptr) {
             std::cout << "Here is your information:" << std::endl;
             std::cout << "- Student ID: " << student->get_account()
                       << std::endl;

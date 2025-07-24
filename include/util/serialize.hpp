@@ -32,16 +32,17 @@ struct AdminData {
     template <typename S> void serialize(S &s) { s.text1b(password, 100); };
 };
 
-inline void serialize(std::vector<Student> &students, std::string path) {
+inline void serialize(std::vector<std::shared_ptr<Student>> &students,
+                      std::string path) {
     std::vector<uint8_t> buffer;
 
     std::vector<StudentData> student_data;
 
-    for (Student student : students) {
+    for (std::shared_ptr<Student> student : students) {
         student_data.push_back(
-            {student.get_student_id().to_string(), student.get_name(),
-             student.get_password(),
-             student.get_gender() == GenderType::FEMALE ? true : false});
+            {student->get_student_id().to_string(), student->get_name(),
+             student->get_password(),
+             student->get_gender() == GenderType::FEMALE ? true : false});
     }
 
     bitsery::Serializer<bitsery::OutputBufferAdapter<std::vector<uint8_t>>> ser(
@@ -63,7 +64,7 @@ inline void serialize(AdminData admin_data, std::string path) {
     ofs.write(reinterpret_cast<const char *>(buffer.data()), buffer.size());
 }
 
-inline std::vector<Student> deserialize(std::string path) {
+inline std::vector<std::shared_ptr<Student>> deserialize(std::string path) {
     std::ifstream ifs(path, std::ios::binary);
     std::vector<uint8_t> buffer((std::istreambuf_iterator<char>(ifs)), {});
 
@@ -72,13 +73,13 @@ inline std::vector<Student> deserialize(std::string path) {
         des(buffer.begin(), buffer.end());
     des.container(student_data, 1000);
 
-    std::vector<Student> students;
+    std::vector<std::shared_ptr<Student>> students;
 
     for (StudentData data : student_data) {
-        students.push_back(
-            Student(StudentID(data.student_id), data.name,
-                    data.gender == 0 ? GenderType::MALE : GenderType::FEMALE,
-                    data.password));
+        students.push_back(std::make_shared<Student>(
+            StudentID(data.student_id), data.name,
+            data.gender == 0 ? GenderType::MALE : GenderType::FEMALE,
+            data.password));
     }
 
     return students;

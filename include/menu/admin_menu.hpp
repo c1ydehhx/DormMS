@@ -3,6 +3,7 @@
 
 #include <iostream>
 
+#include "menu/room_manage_menu.hpp"
 #include "menu/student_manage_menu.hpp"
 
 class AdminMenu {
@@ -33,6 +34,7 @@ class AdminMenu {
                 StudentManageMenu::enter_student_manage_system();
                 break;
             case 2:
+                RoomManageMenu::enter_room_manage_system();
                 break;
             case 3:
                 break;

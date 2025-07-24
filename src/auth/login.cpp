@@ -14,11 +14,11 @@ std::shared_ptr<User> LoginPortal::get_user_by_account(std::string account) {
         return std::make_shared<User>(Admin::get_instance());
     }
 
-    optional<Student> optional_student =
+    std::shared_ptr<Student> student =
         StudentManageSystem::get_instance().get_student(account);
 
-    if (optional_student.has_value()) {
-        return std::make_shared<User>(optional_student.value());
+    if (student != nullptr) {
+        return std::dynamic_pointer_cast<User>(student);
     } else {
         return NULL;
     }

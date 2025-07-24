@@ -38,10 +38,11 @@ class StudentManageMenu {
         char *password =
             getpass("<4/4> Please enter password for this student: ");
 
-        Student student(StudentID(student_id_str), student_name,
-                        gender == "F" ? GenderType::FEMALE : GenderType::MALE);
+        std::shared_ptr<Student> student = std::make_shared<Student>(
+            StudentID(student_id_str), student_name,
+            gender == "F" ? GenderType::FEMALE : GenderType::MALE);
 
-        student.set_password(password);
+        student->set_password(password);
 
         StudentManageSystem::get_instance().add_student(student);
 

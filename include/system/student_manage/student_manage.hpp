@@ -2,17 +2,21 @@
 #define STUDENT_MANAGE_SYSTEM_HPP
 
 #include <iostream>
+#include <memory>
 #include <optional>
+#include <string>
 #include <tabulate/table.hpp>
 #include <vector>
 
 #include "config/config.hpp"
+#include "room/bed.hpp"
+#include "room/room.hpp"
 #include "user/student.hpp"
 #include "util/serialize.hpp"
 
 class StudentManageSystem {
   private:
-    std::vector<Student> students;
+    std::vector<std::shared_ptr<Student>> students;
     StudentManageSystem() {}
 
   public:
@@ -21,22 +25,24 @@ class StudentManageSystem {
         return instance;
     }
 
-    std::optional<Student> get_student(std::string ID) {
+    std::shared_ptr<Student> get_student(std::string ID) {
         for (int i = 0; i < students.size(); i++) {
-            if (students[i].get_student_id().to_string() == ID) {
-                return std::optional<Student>(students[i]);
+            if (students[i]->get_student_id().to_string() == ID) {
+                return students[i];
             }
         }
-        return std::optional<Student>();
+        return nullptr;
     }
 
-    void add_student(Student student) { students.push_back(student); }
+    void add_student(std::shared_ptr<Student> student) {
+        students.push_back(student);
+    }
 
     void delete_student(std::string ID) {
         auto it = students.begin();
 
         for (int i = 0; it != students.end(); it++) {
-            if (it->get_student_id().to_string() == ID) {
+            if ((*it)->get_student_id().to_string() == ID) {
                 break;
             }
         }
@@ -52,11 +58,22 @@ class StudentManageSystem {
 
         table.add_row({"ID", "Name", "Gender", "Room", "Bed", "Password"});
 
-        for (Student student : students) {
+        for (std::shared_ptr<Student> student : students) {
+            std::shared_ptr<Bed> bed = student->get_bed();
+
+            std::string bed_id = "---";
+            std::string room_id = "---";
+
+            if (bed != nullptr) {
+                bed_id = bed->get_id();
+                room_id = bed->get_room_id();
+            }
+
             table.add_row(
-                {student.get_student_id().to_string(), student.get_name(),
-                 student.get_gender() == GenderType::FEMALE ? "Female" : "Male",
-                 "21013", "2", student.get_password()});
+                {student->get_student_id().to_string(), student->get_name(),
+                 student->get_gender() == GenderType::FEMALE ? "Female"
+                                                             : "Male",
+                 room_id, bed_id, student->get_password()});
         }
 
         table.print(std::cout);
