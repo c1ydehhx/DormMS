@@ -3,6 +3,7 @@
 
 #include <memory>
 #include <optional>
+#include <string>
 #include <vector>
 
 #include "room/room.hpp"
@@ -12,7 +13,7 @@
 class RoomManageSystem {
 
   private:
-    std::vector<std::shared_ptr<Room>> room;
+    std::vector<std::shared_ptr<Room>> rooms;
     RoomManageSystem() {}
 
   public:
@@ -22,20 +23,20 @@ class RoomManageSystem {
     }
 
     void add_room(std::string room_id, int capacity) {
-        room.push_back(std::make_shared<Room>(room_id, capacity));
+        rooms.push_back(std::make_shared<Room>(room_id, capacity));
     }
 
     void delete_room(std::string room_id) {
-        for (auto it = room.begin(); it != room.end(); it++) {
+        for (auto it = rooms.begin(); it != rooms.end(); it++) {
             if ((*it)->get_id() == room_id) {
-                room.erase(it);
+                rooms.erase(it);
                 break;
             }
         }
     }
 
     std::shared_ptr<Room> get_room(std::string room_id) {
-        for (auto it = room.begin(); it != room.end(); it++) {
+        for (auto it = rooms.begin(); it != rooms.end(); it++) {
             if ((*it)->get_id() == room_id) {
                 return (*it);
             }
@@ -50,6 +51,21 @@ class RoomManageSystem {
             StudentManageSystem::get_instance().get_student(student_id);
 
         room->register_bed(student, bed_id);
+    }
+
+    void list_rooms() {
+        tabulate::Table table;
+        table.format().multi_byte_characters(true);
+
+        table.add_row({"ID", "Capacity", "Using"});
+
+        for (std::shared_ptr<Room> room : rooms) {
+            table.add_row(
+                {room->get_id(), std::to_string(room->get_capacity()), "0"});
+        }
+
+        table.print(std::cout);
+        std::cout << std::endl;
     }
 };
 

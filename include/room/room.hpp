@@ -14,7 +14,7 @@ class Room {
     std::string room_id;
 
   public:
-    Room(std::string room_id, int bed_count) {
+    Room(std::string room_id, int bed_count) : room_id(room_id) {
         for (int i = 0; i < bed_count; i++) {
             beds.push_back(
                 std::make_shared<Bed>(std::to_string(i + 1), room_id));
@@ -30,6 +30,7 @@ class Room {
     }
 
     std::string get_id() { return room_id; }
+    size_t get_capacity() { return beds.size(); }
 };
 
 #endif

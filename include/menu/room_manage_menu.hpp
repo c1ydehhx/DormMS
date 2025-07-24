@@ -6,6 +6,11 @@
 
 class RoomManageMenu {
   private:
+    static void enter_list_room_procedure() {
+        RoomManageSystem::get_instance().list_rooms();
+        std::cout << std::endl;
+    }
+
     static void enter_add_room_procedure() {
         std::string room_id;
         int room_capacity = 999;
@@ -57,7 +62,8 @@ class RoomManageMenu {
             std::cout << " - [1] Add Room" << std::endl;
             std::cout << " - [2] Delete Room" << std::endl;
             std::cout << " - [3] List Room" << std::endl;
-            std::cout << " - [4] Commit" << std::endl;
+            std::cout << " - [4] Register student into room" << std::endl;
+            std::cout << " - [5] Commit" << std::endl;
             std::cout << " - [0] Back to Main Menu" << std::endl;
             std::cout << std::endl;
             std::cout << "Enter your choice: ";
@@ -72,6 +78,9 @@ class RoomManageMenu {
                 break;
             case 2:
                 enter_delete_room_procedure();
+                break;
+            case 3:
+                enter_list_room_procedure();
                 break;
             default:
                 std::cout << "Please, select function in the list" << std::endl;
