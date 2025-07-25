@@ -53,6 +53,8 @@ class Room {
         }
         return nullptr;
     }
+
+    std::shared_ptr<Bed> get_bed(int index) { return beds[index]; }
 };
 
 #endif

@@ -2,7 +2,6 @@
 #define ROOM_MANAGE_HPP
 
 #include <memory>
-#include <optional>
 #include <stdexcept>
 #include <string>
 #include <vector>
@@ -10,6 +9,7 @@
 #include "room/room.hpp"
 #include "system/student_manage/student_manage.hpp"
 #include "user/student.hpp"
+#include "util/serialize.hpp"
 
 class RoomManageSystem {
 
@@ -71,6 +71,39 @@ class RoomManageSystem {
 
         table.print(std::cout);
         std::cout << std::endl;
+    }
+
+    void commit() {
+        std::string path = Configuration::get_instance().get_room_data_path();
+        serialize(rooms, path);
+    }
+
+    void read_rooms() {
+        std::string path = Configuration::get_instance().get_room_data_path();
+
+        std::vector<RoomData> room_datas = deserialize_room_data(path);
+
+        rooms.clear();
+
+        for (int i = 0; i < room_datas.size(); i++) {
+            std::shared_ptr<Room> room = std::make_shared<Room>(
+                room_datas[i].room_id, room_datas[i].bed_count);
+
+            for (int j = 0; j < room_datas[i].bed_owners.size(); j++) {
+                std::string student_id = room_datas[i].bed_owners[j];
+
+                if (student_id.length() == 0) {
+                    continue;
+                }
+
+                std::shared_ptr<Student> student =
+                    StudentManageSystem::get_instance().get_student(student_id);
+
+                room->register_bed(student, std::to_string(i + 1));
+            }
+
+            rooms.push_back(room);
+        }
     }
 };
 

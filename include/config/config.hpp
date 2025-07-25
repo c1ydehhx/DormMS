@@ -10,7 +10,7 @@ class Configuration {
   private:
     std::string admin_data_path;
     std::string student_data_path;
-    std::string dorm_data_path;
+    std::string room_data_path;
     Configuration() {}
 
   public:
@@ -23,7 +23,7 @@ class Configuration {
 
     std::string get_student_data_path() { return student_data_path; }
 
-    std::string get_dorm_data_path() { return dorm_data_path; }
+    std::string get_room_data_path() { return room_data_path; }
 
     void load_configuration(std::string path) {
         std::ifstream f(path);
@@ -39,9 +39,9 @@ class Configuration {
         std::cout << "Load student data by path: " << student_data_path
                   << std::endl;
 
-        dorm_data_path = data["dorm_data"];
+        room_data_path = data["room_data"];
 
-        std::cout << "Load dorm data by path: " << dorm_data_path << std::endl;
+        std::cout << "Load room data by path: " << room_data_path << std::endl;
 
         std::cout << std::endl;
     }

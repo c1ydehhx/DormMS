@@ -2,6 +2,7 @@
 #include "config/config.hpp"
 #include "menu/admin_menu.hpp"
 #include "menu/student_menu.hpp"
+#include "system/room_manage/room_manage.hpp"
 #include "user/admin.hpp"
 #include "user/current_user.hpp"
 #include "user/user.hpp"
@@ -12,6 +13,7 @@ int main(int argc, char *argv[]) {
     Configuration::get_instance().load_configuration(argv[1]);
     Admin::initialize_admin();
     StudentManageSystem::get_instance().read_students();
+    RoomManageSystem::get_instance().read_rooms();
 
     // Login
     LoginPortal::login();

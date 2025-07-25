@@ -59,7 +59,7 @@ class StudentManageSystem {
         table.add_row({"ID", "Name", "Gender", "Room", "Bed", "Password"});
 
         for (std::shared_ptr<Student> student : students) {
-            std::shared_ptr<Bed> bed = student->get_bed();
+            std::shared_ptr<Bed> bed = nullptr;
 
             std::string bed_id = "---";
             std::string room_id = "---";

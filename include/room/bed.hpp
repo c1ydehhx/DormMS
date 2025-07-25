@@ -20,6 +20,7 @@ class Bed {
     }
     std::string get_id() { return bed_id; }
     std::string get_room_id() { return room_id; }
+    std::shared_ptr<Student> get_owner() { return owner; }
     bool is_used() { return owner != nullptr; }
     void register_bed(std::shared_ptr<Student> owner) { this->owner = owner; }
 };

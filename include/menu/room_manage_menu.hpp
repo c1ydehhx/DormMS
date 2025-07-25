@@ -90,6 +90,20 @@ class RoomManageMenu {
         }
     }
 
+    static void enter_commit_procedure() {
+        std::string sure;
+
+        std::cout << "<1/1> Are you sure? (y/n) ";
+        std::cin >> sure;
+
+        if (sure == "y" || sure == "Y") {
+            RoomManageSystem::get_instance().commit();
+            std::cout << "Commit." << std::endl << std::endl;
+        } else {
+            std::cout << "Exit procedure." << std::endl << std::endl;
+        }
+    }
+
   public:
     static void enter_room_manage_system() {
         int choice = 0;
@@ -125,6 +139,9 @@ class RoomManageMenu {
                 break;
             case 4:
                 enter_register_student_into_room_procedure();
+                break;
+            case 5:
+                enter_commit_procedure();
                 break;
             default:
                 std::cout << "Please, select function in the list" << std::endl;
