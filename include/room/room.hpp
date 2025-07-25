@@ -21,16 +21,38 @@ class Room {
         }
     }
 
-    void register_bed(std::shared_ptr<Student> student, int bed_id) {
-        if (bed_id < 1 || bed_id > beds.size()) {
-            throw std::invalid_argument("Specific ID of bed is absent");
+    bool register_bed(std::shared_ptr<Student> student, std::string bed_id) {
+        for (std::shared_ptr<Bed> bed : beds) {
+            if (bed->get_id() == bed_id) {
+                bed->register_bed(student);
+                return true;
+            }
         }
-        beds[bed_id - 1]->register_bed(student);
-        student->set_bed(beds[bed_id - 1]);
+        return false;
     }
 
     std::string get_id() { return room_id; }
+
     size_t get_capacity() { return beds.size(); }
+
+    size_t get_using_count() {
+        int count = 0;
+
+        for (std::shared_ptr<Bed> bed : beds) {
+            count += (bed->is_used());
+        }
+
+        return count;
+    }
+
+    std::shared_ptr<Bed> get_last_unused_bed() {
+        for (std::shared_ptr<Bed> bed : beds) {
+            if (!bed->is_used()) {
+                return bed;
+            }
+        }
+        return nullptr;
+    }
 };
 
 #endif

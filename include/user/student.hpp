@@ -18,8 +18,6 @@ class Student : public User {
     std::string name;
     GenderType gender;
 
-    std::shared_ptr<Bed> bed = nullptr;
-
   public:
     Student(StudentID student_id, std::string name, GenderType gender,
             std::string password = "")
@@ -31,10 +29,6 @@ class Student : public User {
     std::string get_name() { return name; }
 
     GenderType get_gender() { return gender; }
-
-    std::shared_ptr<Bed> get_bed() { return this->bed; }
-
-    void set_bed(std::shared_ptr<Bed> bed) { this->bed = bed; }
 };
 
 #endif

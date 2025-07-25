@@ -8,7 +8,7 @@ class Room;
 
 class Bed {
   private:
-    std::shared_ptr<Student> owner;
+    std::shared_ptr<Student> owner = nullptr;
     std::string room_id;
     std::string bed_id;
 
@@ -20,6 +20,7 @@ class Bed {
     }
     std::string get_id() { return bed_id; }
     std::string get_room_id() { return room_id; }
+    bool is_used() { return owner != nullptr; }
     void register_bed(std::shared_ptr<Student> owner) { this->owner = owner; }
 };
 

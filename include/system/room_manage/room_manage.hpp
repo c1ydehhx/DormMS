@@ -3,6 +3,7 @@
 
 #include <memory>
 #include <optional>
+#include <stdexcept>
 #include <string>
 #include <vector>
 
@@ -44,13 +45,17 @@ class RoomManageSystem {
         return nullptr;
     }
 
-    void register_stduent_into_room(std::string room_id, int bed_id,
+    void register_stduent_into_room(std::string room_id, std::string bed_id,
                                     std::string student_id) {
         std::shared_ptr<Room> room = get_room(room_id);
         std::shared_ptr<Student> student =
             StudentManageSystem::get_instance().get_student(student_id);
 
-        room->register_bed(student, bed_id);
+        bool is_register_success = room->register_bed(student, bed_id);
+
+        if (!is_register_success) {
+            throw std::runtime_error("Register bed failed");
+        }
     }
 
     void list_rooms() {
@@ -60,8 +65,8 @@ class RoomManageSystem {
         table.add_row({"ID", "Capacity", "Using"});
 
         for (std::shared_ptr<Room> room : rooms) {
-            table.add_row(
-                {room->get_id(), std::to_string(room->get_capacity()), "0"});
+            table.add_row({room->get_id(), std::to_string(room->get_capacity()),
+                           std::to_string(room->get_using_count())});
         }
 
         table.print(std::cout);

@@ -1,8 +1,12 @@
 #ifndef ROOM_MANAGE_ROOM_HPP
 #define ROOM_MANAGE_ROOM_HPP
 
+#include "menu/student_manage_menu.hpp"
 #include "system/room_manage/room_manage.hpp"
+#include "system/student_manage/student_manage.hpp"
+#include "user/student.hpp"
 #include <iostream>
+#include <memory>
 
 class RoomManageMenu {
   private:
@@ -49,6 +53,43 @@ class RoomManageMenu {
         }
     }
 
+    static void enter_register_student_into_room_procedure() {
+        std::string student_id;
+        std::string room_id;
+
+        std::shared_ptr<Student> student = nullptr;
+
+        while (student == nullptr) {
+            std::cout << "<1/2> Please enter student ID: ";
+            std::cin >> student_id;
+
+            student =
+                StudentManageSystem::get_instance().get_student(student_id);
+        }
+
+        std::shared_ptr<Room> room = nullptr;
+
+        while (room == nullptr) {
+            std::cout << "<2/2> Please enter room ID: ";
+            std::cin >> room_id;
+
+            room = RoomManageSystem::get_instance().get_room(room_id);
+        }
+
+        std::shared_ptr<Bed> last_unused_bed = room->get_last_unused_bed();
+
+        bool success = room->register_bed(student, last_unused_bed->get_id());
+
+        if (success) {
+            std::cout << "Register student "
+                      << student->get_student_id().to_string() << " into room "
+                      << room->get_id() << std::endl;
+            std::cout << std::endl;
+        } else {
+            std::cout << "Register failed" << std::endl;
+        }
+    }
+
   public:
     static void enter_room_manage_system() {
         int choice = 0;
@@ -81,6 +122,9 @@ class RoomManageMenu {
                 break;
             case 3:
                 enter_list_room_procedure();
+                break;
+            case 4:
+                enter_register_student_into_room_procedure();
                 break;
             default:
                 std::cout << "Please, select function in the list" << std::endl;
